@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Button;
 import android.view.View;
-
+import android.content.Context;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,16 +46,27 @@ public class MainActivity extends AppCompatActivity {
                 room = roomEntry.getText().toString();
                 date = dateEntry.getText().toString();
 
-                System.out.println("Room: " + room);
-                System.out.println("Building: " + building);
-                System.out.println("Hours: " + hours);
-                System.out.println("Minutes: " + minutes);
-                System.out.println("AM/PM: " + am_Identifier);
-                System.out.println("Date: " + date);
+                writeToFile(date, hours, minutes, am_Identifier, building, room);
 
             }
         });
+    }
+
+    //Pass the values of the user's text boxes to the method to write to a text file to be passed onto loadJava.
+    public void writeToFile(String date, String hours, String minutes, String am_Identifier, String building, String room){
+
+        System.out.println("Writing to file.");
+        System.out.println("Room: " + room);
+        System.out.println("Building: " + building);
+        System.out.println("Hours: " + hours);
+        System.out.println("Minutes: " + minutes);
+        System.out.println("AM/PM: " + am_Identifier);
+        System.out.println("Date: " + date);
+
+
 
     }
 
 }
+
+
