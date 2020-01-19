@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.view.View;
 import android.content.Context;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Pass the values of the user's text boxes to the method to write to a text file to be passed onto loadJava.
-    public void writeToFile(String date, String hours, String minutes, String am_Identifier, String building, String room){
+    public void writeToFile(String date, String hours, String minutes, String am_Identifier, String building, String room) {
 
         System.out.println("Writing to file.");
         System.out.println("Room: " + room);
@@ -63,7 +64,15 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("AM/PM: " + am_Identifier);
         System.out.println("Date: " + date);
 
+        //Method redirects user to new empty activity page with resultSet.
+        openResultPage();
 
+    }
+
+    public void openResultPage() {
+
+        Intent intent = new Intent(this, resultPage.class);
+        startActivity(intent);
 
     }
 
