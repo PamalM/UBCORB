@@ -16,12 +16,14 @@ public class giveoutput {
 
 	private boolean hasDate, hasTime, hasArea, hasRoom;
 	private static String sql;
-	private static String from_clause = " FROM area a JOIN roombooking rb USING (area_id) JOIN room USING (room_id) ";
-	private static Date date;
-	private static Time time;
+	private static String from_clause = " FROM roombooking rb ";
+	private static String date;
+	private static String time;
 	private static String area_name;
 	private static String room_name;
-	private static boolean taken;
+	
+	private static JSONObject employeeObject;
+	private static JSONArray resultarray= new JSONArray();
 
 	public static void main(String[] args) throws Exception
 	{
@@ -42,62 +44,83 @@ public class giveoutput {
 		// TODO Auto-generated method stub
 		extractJSONData();
 
-		hasDate = (date == null);
-		hasTime = (time == null);
-		hasArea = (area_name == null);
-		hasRoom = (room_name == null);
+		hasDate = (date != null);
+		hasTime = (time != null);
+		hasArea = (area_name != null);
+		hasRoom = (room_name != null);
 	}
 
 	private static void gettimeslots() {
 		// TODO Auto-generated method stub
 		if(hasDate) {
-			sql = "Select room_name, area_name" + from_clause + "where taken = false and date = " + date;
+			sql = "Select rb.area_name, rb.room_name, rb.booking_time" + from_clause + "where taken = 'false' and booking_date = ?";
+			
 			if(hasTime)
-				sql = sql + " time = " + time;
+				sql = sql + " and booking_time = ?";
+			/*
 			if(hasArea)
-				sql = sql + " area_name = " + area_name;
+				sql = sql + " and area_name = ?";
+			
 			if(hasRoom)
-				sql = sql + " room_name = " + room_name;
+				sql = sql + " and room_name = ?";
+				*/
+			
+			System.out.println(sql);
 		}
 
 	}
 
 	private static void setoutput() throws SQLException {
+		System.out.println("hi");
 		// TODO Auto-generated method stub
 		PreparedStatement stmt = con.prepareStatement(sql);
-		ResultSet rst = stmt.executeQuery(sql);
+		stmt.setString(1, date);
+		if(hasTime)
+		stmt.setString(2, time);
+		/*if(hasArea)
+			stmt.setString(3, area_name);
+		if(hasRoom)
+			stmt.setString(4, room_name);
+			*/
+		
+		ResultSet rst = stmt.executeQuery();
+		
 
+		System.out.println("hi");
 		while(rst.next()) {
+			System.out.println(rst.getString(1));
 			//sends the info from the query to the application
-			sendinfo(rst.getDate(1),rst.getTime(2),rst.getString(3),rst.getString(4),rst.getBoolean(5));
-		}
+			System.out.println(rst.getString(1) + " " + rst.getString(2) + " " + rst.getString(3));
+
+			sendinfo(rst.getString(1),rst.getString(2), rst.getString(3));
+			}
+		System.out.println("hi");
 
 
 	}
 
 	//Writing to JSON
-	private static void sendinfo(Date date2, Time time2, String string, String string2, boolean b) {
+	private static void sendinfo(String area, String room, String time) {
+		System.out.println("hi");
 		// TODO Auto-generated method stub
 		
 		//First Employee
 		JSONObject infoDetails = new JSONObject();
-		infoDetails.put("date", date2);
+		infoDetails.put("area", area);
+		infoDetails.put("room", room);
 		infoDetails.put("time", time);
-		infoDetails.put("area", string);
-		infoDetails.put("room", string2);
-		infoDetails.put("area", b);
-
-		JSONObject infoObject = new JSONObject(); 
-		infoObject.put("info", infoDetails);
+		
+		System.out.println(area + " " + room + " " + time);
 
 		//Add employees to list
-		JSONArray infoList = new JSONArray();
-		infoList.add(infoObject);
+		resultarray.add(infoDetails);
+		
+		System.out.println(resultarray.toString());
 
 		//Write JSON file
 		try (FileWriter file = new FileWriter("data/results.json")) {
 
-			file.write(infoList.toJSONString());
+			file.write(resultarray.toJSONString());
 			file.flush();
 
 		} catch (IOException e) {
@@ -122,54 +145,55 @@ private static void connect() throws Exception {
 }
 
 static void extractJSONData() {
+		
+		//JSON parser object to parse read file
+        JSONParser jsonParser = new JSONParser();
+         
+        try (FileReader reader = new FileReader("data/info_needed.json"))
+        {
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+ 
+            employeeObject = (JSONObject) obj;
+            //System.out.println(info);
+             
+            //Iterate over employee array
+            //info.forEach(data -> parseData() );
+            
+            parseData();
 
-	//JSON parser object to parse read file
-	JSONParser jsonParser = new JSONParser();
-
-	try (FileReader reader = new FileReader("data/info.json"))
-	{
-		//Read JSON file
-		Object obj = jsonParser.parse(reader);
-
-		JSONArray info = (JSONArray) obj;
-		System.out.println(info);
-
-		//Iterate over employee array
-		info.forEach( data -> parseData( (JSONObject) data ) );
-
-	} catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} catch (IOException e) {
-		e.printStackTrace();
-	} catch (ParseException e) {
-		e.printStackTrace();
+            
+            //Foreign Key (area_name) references area(area_name)
+ 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 	}
-}
 
-static void parseData(JSONObject data) 
+static void parseData() 
 {
-	//Get employee object within list
-	JSONObject employeeObject = (JSONObject) data.get("data");
-
-	//Get employee first name
-	date = (Date) employeeObject.get("date");    
-	System.out.println(date);
-
-	//Get employee last name
-	time = (Time) employeeObject.get("time");  
-	System.out.println(time);
-
-	//Get employee website name
-	area_name = (String) employeeObject.get("area");    
-	System.out.println(area_name);
-
-	//Get employee website name
-	room_name = (String) employeeObject.get("room");    
-	System.out.println(room_name);
-
-	//Get employee website name
-	taken = (boolean) employeeObject.get("taken");    
-	System.out.println(taken);
-
+		
+     
+    //Get employee first name
+    date = (String) employeeObject.get("date");    
+    System.out.println(date);
+     
+    //Get employee last name
+    time = (String) employeeObject.get("time");  
+    System.out.println(time);
+     
+    //Get employee website name
+    area_name = (String) employeeObject.get("area");    
+    System.out.println(area_name);
+    
+    //Get employee website name
+    room_name = (String) employeeObject.get("room");    
+    System.out.println(room_name);
+    
 }
+
 }
