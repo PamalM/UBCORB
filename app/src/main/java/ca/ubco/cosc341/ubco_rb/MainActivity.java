@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     EditText dateEntry, hhEntry, mmEntry, timeOfDayEntry, buildingEntry, roomEntry;
     Button sumbitButton;
 
-    String room, hours, minutes, building, am_Identifier;
+    String room, hours, minutes, building, am_Identifier, date;
 
 
     @Override
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Finding the widgets by their appropriate ids.
         dateEntry = (EditText) findViewById(R.id.dateEntry);
         hhEntry = (EditText) findViewById(R.id.hhEntry);
         mmEntry = (EditText) findViewById(R.id.mmEntry);
@@ -32,12 +33,25 @@ public class MainActivity extends AppCompatActivity {
 
         sumbitButton.setOnClickListener(new View.OnClickListener() {
 
+            //Method will execute when user clicks search button.
+            //Grab current values in all text boxes, and save into variables.
             @Override
             public void onClick(View v) {
-                room = roomEntry.getText().toString();
-                
 
-                System.out.println("Name: " + room);
+                room = roomEntry.getText().toString();
+                hours = hhEntry.getText().toString();
+                minutes = mmEntry.getText().toString();
+                am_Identifier = timeOfDayEntry.getText().toString();
+                building = buildingEntry.getText().toString();
+                room = roomEntry.getText().toString();
+                date = dateEntry.getText().toString();
+
+                System.out.println("Room: " + room);
+                System.out.println("Building: " + building);
+                System.out.println("Hours: " + hours);
+                System.out.println("Minutes: " + minutes);
+                System.out.println("AM/PM: " + am_Identifier);
+                System.out.println("Date: " + date);
 
             }
         });
