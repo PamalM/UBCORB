@@ -27,4 +27,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/background" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="388dp"
+        android:layout_height="67dp"
+        tools:layout_editor_absoluteX="11dp"
+        tools:layout_editor_absoluteY="82dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
