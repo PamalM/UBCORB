@@ -1,19 +1,27 @@
- package ca.ubco.cosc341.ubco_rb;
+package ca.ubco.cosc341.ubco_rb;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.ListView;
+import android.content.Context;
 
 import java.util.ArrayList;
 
- public class resultPage extends AppCompatActivity {
+public class resultPage extends AppCompatActivity {
 
-     Button returnButton;
+    Button returnButton;
+    public static TextView date1;
+
+    private static final String URL = "https://jsoneditoronline.org/?id=b60835f733e94c8b854499eb1c07db2f";
+    private static String date, time, building, room;
 
 
 
@@ -22,14 +30,8 @@ import java.util.ArrayList;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
 
-        //Setup listview to accommodate search results.
-
-        ListView listView = (ListView) findViewById(R.id.listView);
-
-        
-
-
         returnButton = (Button) findViewById(R.id.returnButton);
+        date1 = (TextView) findViewById(R.id.date1);
 
         returnButton.setOnClickListener(new View.OnClickListener() {
 
@@ -47,11 +49,11 @@ import java.util.ArrayList;
 
     }
 
-     public void returnHome() {
+    public void returnHome() {
 
-         Intent intent = new Intent(this, MainActivity.class);
-         startActivity(intent);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
 
-     }
+    }
 
 }
