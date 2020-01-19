@@ -29,21 +29,6 @@
         app:srcCompat="@drawable/background" />
 
     <TextView
-        android:id="@+id/date1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#000000"
-        android:text="Date: "
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.122" />
-
-    <TextView
         android:id="@+id/time1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,25 +38,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.148" />
-
-    <TextView
-        android:id="@+id/building1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#000000"
-        android:text="Building:"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.042"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.175" />
+        app:layout_constraintVertical_bias="0.162" />
 
     <TextView
         android:id="@+id/room1"
@@ -83,9 +53,39 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintHorizontal_bias="0.091"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.202" />
+        app:layout_constraintVertical_bias="0.216" />
+
+    <TextView
+        android:id="@+id/date1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:text="Date: "
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.136" />
+
+    <TextView
+        android:id="@+id/building1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:text="Building:"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.189" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

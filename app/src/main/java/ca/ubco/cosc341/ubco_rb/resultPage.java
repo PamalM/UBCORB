@@ -18,12 +18,10 @@ import java.util.ArrayList;
 public class resultPage extends AppCompatActivity {
 
     Button returnButton;
-    public static TextView date1;
+    public static TextView date1, time1, building1, room1;
 
     private static final String URL = "https://jsoneditoronline.org/?id=b60835f733e94c8b854499eb1c07db2f";
     private static String date, time, building, room;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +30,9 @@ public class resultPage extends AppCompatActivity {
 
         returnButton = (Button) findViewById(R.id.returnButton);
         date1 = (TextView) findViewById(R.id.date1);
+        time1 = (TextView) findViewById(R.id.time1);
+        building1 = (TextView) findViewById(R.id.building1);
+        room1 = (TextView) findViewById(R.id.room1);
 
         returnButton.setOnClickListener(new View.OnClickListener() {
 
@@ -39,10 +40,8 @@ public class resultPage extends AppCompatActivity {
             //Grab current values in all text boxes, and save into variables.
             @Override
             public void onClick(View v) {
-
                 //Method redirects user back to home/search screen.
                 returnHome();
-
             }
         });
 

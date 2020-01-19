@@ -8,6 +8,16 @@ import android.widget.Button;
 import android.view.View;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+
+import java.*;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     Button sumbitButton;
 
     String room, hours, minutes, building, am_Identifier, date;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
