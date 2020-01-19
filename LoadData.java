@@ -3,6 +3,11 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 
 /**
  * Loads the order database using code.
@@ -45,12 +50,12 @@ public class LoadData
 		extractJSONData();
 	}
 	
-	private static void extractJSONData() {
+	static void extractJSONData() {
 		
 		//JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
          
-        try (FileReader reader = new FileReader("data/info.json"))
+        try (FileReader reader = new FileReader("data/Room_Scrapped_Data.json"))
         {
             //Read JSON file
             Object obj = jsonParser.parse(reader);
@@ -59,7 +64,7 @@ public class LoadData
             System.out.println(info);
              
             //Iterate over employee array
-            info.forEach( emp -> parseData( (JSONObject) emp ) );
+            info.forEach( data -> parseData( (JSONObject) data ) );
  
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -70,7 +75,7 @@ public class LoadData
         }
 	}
 	
-	private static void parseData(JSONObject data) 
+	static void parseData(JSONObject data) 
     {
         //Get employee object within list
         JSONObject employeeObject = (JSONObject) data.get("data");
