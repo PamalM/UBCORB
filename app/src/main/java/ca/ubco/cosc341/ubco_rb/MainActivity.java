@@ -79,14 +79,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openResultPage() {
-
         Intent intent = new Intent(this, resultPage.class);
         startActivity(intent);
-        //fetchData process = new fetchData();
-        //process.execute();
-
-
-
     }
 
 }
