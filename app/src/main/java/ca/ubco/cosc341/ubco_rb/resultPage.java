@@ -1,39 +1,28 @@
 package ca.ubco.cosc341.ubco_rb;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.ListView;
 import android.content.Context;
-
-import java.util.ArrayList;
 
 public class resultPage extends AppCompatActivity {
 
+    //Widgets
     Button returnButton;
-    public static TextView date1, time1, building1, room1;
-
-    private static final String URL = "https://jsoneditoronline.org/?id=b60835f733e94c8b854499eb1c07db2f";
-    private static String date, time, building, room;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
 
+        //Find button with id.
         returnButton = (Button) findViewById(R.id.returnButton);
-        date1 = (TextView) findViewById(R.id.date1);
-        time1 = (TextView) findViewById(R.id.time1);
-        building1 = (TextView) findViewById(R.id.building1);
-        room1 = (TextView) findViewById(R.id.room1);
 
+        //Set search button onClick event handler.
         returnButton.setOnClickListener(new View.OnClickListener() {
 
             //Method will execute when user clicks search button.
@@ -45,14 +34,12 @@ public class resultPage extends AppCompatActivity {
             }
         });
 
-
     }
 
+    //Method to be called upon back button onClick event.
     public void returnHome() {
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
     }
 
 }
