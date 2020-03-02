@@ -13,8 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/fg_Image_View"
@@ -30,8 +29,8 @@
 
     <ImageView
         android:id="@+id/buttonBG_IMGView"
-        android:layout_width="385dp"
-        android:layout_height="356dp"
+        android:layout_width="390dp"
+        android:layout_height="376dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/bg_Image_View"
         app:layout_constraintStart_toStartOf="@+id/bg_Image_View"
@@ -54,5 +53,40 @@
         app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
         app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView"
         app:layout_constraintVertical_bias="0.953" />
+
+    <Spinner
+        android:id="@+id/buildingSpinner"
+        android:layout_width="317dp"
+        android:layout_height="37dp"
+        android:background="#C2BFBF"
+        android:popupBackground="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/bg_Image_View"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView" />
+
+    <Spinner
+        android:id="@+id/roomSpinner"
+        android:layout_width="317dp"
+        android:layout_height="37dp"
+        android:background="#C2BFBF"
+        android:popupBackground="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/timeSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buildingSpinner" />
+
+    <Spinner
+        android:id="@+id/timeSpinner"
+        android:layout_width="131dp"
+        android:layout_height="39dp"
+        android:background="#C2BFBF"
+        android:popupBackground="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/searchButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.167"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bg_Image_View"
+        app:layout_constraintVertical_bias="0.391" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,19 +24,13 @@ public class resultPage extends AppCompatActivity {
 
         //Set search button onClick event handler.
         returnButton.setOnClickListener(new View.OnClickListener() {
-
-            //Method will execute when user clicks search button.
-            //Grab current values in all text boxes, and save into variables.
             @Override
-            public void onClick(View v) {
-                //Method redirects user back to home/search screen.
-                returnHome();
-            }
+            public void onClick(View v) { returnHome(); }
         });
 
     }
 
-    //Method to be called upon back button onClick event.
+    //Method returns user back to MainActivity (Search Page)
     public void returnHome() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
