@@ -1,29 +1,43 @@
 package ca.ubco.cosc341.ubco_rb;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
-import java.lang.reflect.Array;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import android.widget.AdapterView;
 import android.widget.Toast;
-import android.view.Gravity;
+import android.widget.TextView;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.Date;
+import android.net.Uri;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Widget objects; To be initialized later on.
+    //Widget objects; To be initialized later in execution.
     Button searchButton;
     Spinner buildingSpinner;
     Spinner roomSpinner;
     Spinner timeSpinner;
+    Spinner durationSpinner;
+    Spinner typeSpinner;
+    TextView dateTag;
+    TextView emailText;
+    TextView titleText;
 
-    //String list containing all the bookable buildings on campus.
+    //List containing all the bookable study buildings on campus.
     String[] buildings = new String[]{
             "Library",
             "Commons - Floor 0",
@@ -35,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     //String list containing all the bookable rooms on campus.
-    //Rooms are respective to their order in the buildings[] list.
+    //Rooms are respective to their order in the buildings[] list;
+    //Where Library = [0], Commons - Floor 0 = [1], ..., and EME-Tower 2 = [6].
     String[][] rooms = {{"LIB 121","LIB 122"},
             {"COM 005","COM 006","COM 007", "COM 008"},
             {"COM 108", "COM 109", "COM 110", "COM 111", "COM 112", "COM 113", "COM 114", "COM 115", "COM 116", "COM 117", "COM 118", "COM 119", "COM 120", "COM 121"},
@@ -50,26 +65,119 @@ public class MainActivity extends AppCompatActivity {
             "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
     };
 
-    //Text-Entry fields that will be passed to conduct search query.
-    String room, hours, minutes, building, am_Identifier, date;
+    //List containing all the possible (duration) times for booking a study room.
+    String[] durationSlots = new String[] {"30 Minutes", "1 Hour", "1.5 Hours", "2 Hours"};
+
+    String[] types = new String[] {"Study Group", "Instructional/Workshop"};
+
+    //Values that will be collected from the user, and passed into intent object to conduct study room search.
+    String building, room, time, duration, type, date, email, title;
+
+    //Widget retrieves the date from the user when they click the 'Select Date' TextView.
+    private DatePickerDialog.OnDateSetListener dateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //Find Search Button by id.
-        searchButton = (Button) findViewById(R.id.searchButton);
+        searchButton = findViewById(R.id.searchButton);
 
         //Find Building Spinner by id.
-        buildingSpinner = (Spinner) findViewById(R.id.buildingSpinner);
+        buildingSpinner = findViewById(R.id.buildingSpinner);
 
         //Find room Spinner by id.
-        roomSpinner = (Spinner) findViewById(R.id.roomSpinner);
+        roomSpinner = findViewById(R.id.roomSpinner);
 
         //Find time Spinner by id.
-        timeSpinner = (Spinner) findViewById(R.id.timeSpinner);
+        timeSpinner = findViewById(R.id.timeSpinner);
+
+        //Find duration spinner by id.
+        durationSpinner = findViewById(R.id.durationSpinner);
+
+        //Find type spinner by id.
+        typeSpinner = findViewById(R.id.typeSpinner);
+
+        //Find email textview by id.
+        emailText = findViewById(R.id.emailText);
+
+        //Find Title textview by id.
+        titleText = findViewById(R.id.titleText);
+
+        //Populate duration Spinner with list.
+        List<String> typeArray =  new ArrayList<String>(Arrays.asList(types));
+        ArrayAdapter<String> adp2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, typeArray){};
+        adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(adp2);
+
+        //Populate duration Spinner with list.
+        List<String> durationArray =  new ArrayList<String>(Arrays.asList(durationSlots));
+        ArrayAdapter<String> adp1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, durationArray){};
+        adp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        durationSpinner.setAdapter(adp1);
+
+
+        //Find date widget by it's id.
+        dateTag = findViewById(R.id.datePicker);
+
+        //Create date string to display in date TextView upon Load.
+        String todays_Date = new SimpleDateFormat("MMM/dd/yyyy", Locale.getDefault()).format(new Date());
+        dateTag.setText(todays_Date);
+
+        //Set onClickListener for when 'Select Date' text is clicked; Transition to datePicker view.
+        dateTag.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view){
+
+                //Get MM-DD-YYYY preference from user.
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                //Draw widget and collect input from user.
+                DatePickerDialog dialog = new DatePickerDialog(MainActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateSetListener, year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+
+        });
+
+        //Initialize dateSetListener.
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                //January = 0 ... December = 11.
+                month += 1;
+                //System.out.println(year + "/" + month + "/" + dayOfMonth);
+
+                //HashTable utilized to print the month according to the input.
+                Hashtable<Integer, String> monthTrack = new Hashtable<Integer, String>();
+                monthTrack.put(1, "Jan");
+                monthTrack.put(2, "Feb");
+                monthTrack.put(3, "Mar");
+                monthTrack.put(4, "Apr");
+                monthTrack.put(5, "May");
+                monthTrack.put(6, "June");
+                monthTrack.put(7, "July");
+                monthTrack.put(8, "Aug");
+                monthTrack.put(9, "Sept");
+                monthTrack.put(10, "Oct");
+                monthTrack.put(11, "Nov");
+                monthTrack.put(12, "Dec");
+
+                //Update the dateText with the user selected date.
+                //Format to append zero to dayOfMonth if it's less than 9.
+                String dateText;
+                if (dayOfMonth <= 9){ dateText = monthTrack.get(month) + "/0" + dayOfMonth + "/" + year; }
+                else{ dateText = monthTrack.get(month) + "/" + dayOfMonth + "/" + year; }
+
+                //Update text after formatting is complete.
+                dateTag.setText(dateText);
+            }
+        };
 
         //Populate the timeSpinner with it's values.
         List<String> timeArray =  new ArrayList<String>(Arrays.asList(timeSlots));
@@ -79,13 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Populate the buildingSpinner with it's values.
         List<String> buildingArray =  new ArrayList<String>(Arrays.asList(buildings));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, buildingArray){
-
-            @Override
-            //Disable the first value of the list; It is to be used as a "hint".
-            public boolean isEnabled(int position){ if(position == 0) { return false; } else { return true; } }
-
-        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, buildingArray){};
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         buildingSpinner.setAdapter(adapter);
 
@@ -94,13 +196,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
-                // If user change the default selection
-                // Disable the first item and display as a "hint".
 
                 if(true){
-                    // Notify (Toast) the user about their building selection.
-                    Toast.makeText(getApplicationContext(), "Building: " + selectedItemText, Toast.LENGTH_LONG).show();
-
                     //Variable to identify which elements of the rooms[][] list to show.
                     //Library = 0
                     //Commons - Floor 0 = 1
@@ -172,32 +269,46 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Fetch values from widgets to be passed into intent.
-                building = buildingSpinner.getSelectedItem().toString();
-                room = roomSpinner.getSelectedItem().toString();
-                hours = timeSpinner.getSelectedItem().toString().substring(0,2);
-                minutes = timeSpinner.getSelectedItem().toString().substring(3,5);
+                //Ensure all fields are complete before submitting book request.
 
-                //Output selections to terminal (For testing).
-                System.out.println("Building: " + building.toString());
-                System.out.println("Room: " + room.toString());
-                System.out.println("Time [H]: " + hours.toString() + " Time [M]: " + minutes.toString());
+                if (!(titleText.getText().length() > 0) || !(emailText.getText().length() > 0)) {
+                    Toast.makeText(getApplicationContext(), "Fill all fields to complete booking!", Toast.LENGTH_LONG).show();
+                }
+
+                else {
+                    //Fetch values from widgets to be passed into intent.
+                    //String building, room, time, duration, type, date, email, title; (Recall this variables. Initialize them and pass them to conduct search).
+                    building = buildingSpinner.getSelectedItem().toString();
+                    room = roomSpinner.getSelectedItem().toString();
+                    time = timeSpinner.getSelectedItem().toString();
+                    duration = durationSpinner.getSelectedItem().toString();
+                    type = typeSpinner.getSelectedItem().toString();
+                    date = dateTag.getText().toString();
+                    email = emailText.getText().toString();
+                    title = titleText.getText().toString();
+
+                    passForQuerying(building, room, time, duration, type, date, email, title);
+
+                }
             }
         });
     }
 
     //Collect and pass the entered values from the text views onto search query for processing.
-    public void passForQuerying(String date, String hours, String minutes, String building, String room) {
+    public void passForQuerying(String building, String room, String time, String duration, String type, String date, String email, String title) {
 
         //Print the entered values on terminal.
-        System.out.println("Room: " + room);
-        System.out.println("Building: " + building);
-        System.out.println("Hours: " + hours);
-        System.out.println("Minutes: " + minutes);
-        System.out.println("Date: " + date);
+        System.out.println("BOOKING BUILDING: " + building);
+        System.out.println("BOOKING ROOM: " + room);
+        System.out.println("BOOKING START TIME: " + time);
+        System.out.println("BOOKING DURATION: " + duration);
+        System.out.println("BOOKING TYPE: " + type);
+        System.out.println("BOOKING DATE: " + date);
+        System.out.println("EMAIL FOR BOOKING: " + email);
+        System.out.println("BOOKING TITLE: " + title);
 
-        //After printing results, open a new activity (page) for resultSet.
-        Intent intent = new Intent(this, resultPage.class);
+        Uri uri = Uri.parse("https://bookings.ok.ubc.ca/studyrooms/edit_entry.php?area=1&room=2&hour=7&minute=0&year=2020&month=3&day=2");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
 
     }

@@ -7,121 +7,256 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/bg_Image_View"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
         android:id="@+id/fg_Image_View"
         android:layout_width="375dp"
         android:layout_height="199dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.03"
         app:srcCompat="@drawable/title" />
 
     <ImageView
         android:id="@+id/buttonBG_IMGView"
-        android:layout_width="390dp"
-        android:layout_height="376dp"
+        android:layout_width="367dp"
+        android:layout_height="443dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/bg_Image_View"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="@+id/bg_Image_View"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fg_Image_View"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.516"
         app:srcCompat="@color/colorAccent" />
 
     <Button
         android:id="@+id/searchButton"
-        android:layout_width="250dp"
-        android:layout_height="55dp"
+        android:layout_width="165dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="8dp"
         android:background="#D3AD00"
-        android:text="@android:string/search_go"
+        android:text="Book"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/buttonBG_IMGView"
         app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
-        app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView"
-        app:layout_constraintVertical_bias="0.937" />
-
-    <Spinner
-        android:id="@+id/buildingSpinner"
-        android:layout_width="317dp"
-        android:layout_height="37dp"
-        android:background="#C2BFBF"
-        android:popupBackground="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/bg_Image_View"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
-        app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView"
-        app:layout_constraintVertical_bias="0.569" />
-
-    <Spinner
-        android:id="@+id/roomSpinner"
-        android:layout_width="317dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginRight="37dp"
-        android:background="#C2BFBF"
-        android:popupBackground="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/timeSpinner"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
-        app:layout_constraintTop_toBottomOf="@+id/buildingSpinner"
-        app:layout_constraintVertical_bias="0.491" />
-
-    <Spinner
-        android:id="@+id/timeSpinner"
-        android:layout_width="131dp"
-        android:layout_height="39dp"
-        android:layout_marginBottom="92dp"
-        android:background="#C2BFBF"
-        android:popupBackground="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonBG_IMGView"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
-        app:layout_constraintTop_toBottomOf="@+id/bg_Image_View"
-        app:layout_constraintVertical_bias="0.868" />
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView" />
 
     <TextView
         android:id="@+id/label1"
-        android:layout_width="71dp"
+        android:layout_width="70dp"
         android:layout_height="20dp"
+        android:layout_marginTop="20dp"
         android:text="BUILDING:"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/buildingSpinner"
         app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.112"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView" />
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Spinner
+        android:id="@+id/buildingSpinner"
+        android:layout_width="164dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="40dp"
+        android:background="#C2BFBF"
+        android:popupBackground="@color/colorPrimary"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView" />
 
     <TextView
         android:id="@+id/label2"
-        android:layout_width="49dp"
-        android:layout_height="21dp"
+        android:layout_width="46dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
         android:text="ROOM:"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/roomSpinner"
         app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.105"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
-        app:layout_constraintTop_toBottomOf="@+id/buildingSpinner"
+        app:layout_constraintHorizontal_bias="0.828"
+        app:layout_constraintStart_toEndOf="@+id/label1"
+        app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Spinner
+        android:id="@+id/roomSpinner"
+        android:layout_width="100dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="40dp"
+        android:background="#C2BFBF"
+        android:popupBackground="@color/colorPrimary"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.323"
+        app:layout_constraintStart_toEndOf="@+id/buildingSpinner"
+        app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView" />
+
+    <TextView
+        android:id="@+id/label3"
+        android:layout_width="40dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="28dp"
+        android:text="TIME:"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toBottomOf="@+id/buildingSpinner" />
+
+    <Spinner
+        android:id="@+id/timeSpinner"
+        android:layout_width="80dp"
+        android:layout_height="32dp"
+        android:background="#C2BFBF"
+        android:popupBackground="@color/colorPrimary"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toBottomOf="@+id/label3" />
+
+    <TextView
+        android:id="@+id/label4"
+        android:layout_width="66dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="32dp"
+        android:text="DURATION:"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.116"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toBottomOf="@+id/timeSpinner" />
+
+    <Spinner
+        android:id="@+id/durationSpinner"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:background="#C2BFBF"
+        android:popupBackground="@color/colorPrimary"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toBottomOf="@+id/label4" />
+
+    <TextView
+        android:id="@+id/label5"
+        android:layout_width="45dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="28dp"
+        android:text="TYPE:"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintStart_toEndOf="@+id/timeSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/buildingSpinner" />
+
+    <Spinner
+        android:id="@+id/typeSpinner"
+        android:layout_width="186dp"
+        android:layout_height="32dp"
+        android:background="#C2BFBF"
+        android:popupBackground="@color/colorPrimary"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.597"
+        app:layout_constraintStart_toEndOf="@+id/timeSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/label5" />
+
+    <TextView
+        android:id="@+id/label7"
+        android:layout_width="37dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="32dp"
+        android:text="DATE:"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toEndOf="@+id/durationSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/typeSpinner" />
+
+    <TextView
+        android:id="@+id/datePicker"
+        android:layout_width="144dp"
+        android:layout_height="32dp"
+        android:background="#0D5246"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.323"
+        app:layout_constraintStart_toEndOf="@+id/durationSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/label7" />
+
+    <TextView
+        android:id="@+id/label6"
+        android:layout_width="51dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:text="EMAIL:"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.145"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toBottomOf="@+id/durationSpinner" />
+
+    <TextView
+        android:id="@+id/label8"
+        android:layout_width="136dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="16dp"
+        android:text="TITLE FOR BOOKING:"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintHorizontal_bias="0.199"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+
+    <EditText
+        android:id="@+id/emailText"
+        android:layout_width="275dp"
+        android:layout_height="32dp"
+        android:background="#2F4E44"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toBottomOf="@+id/label6" />
+
+    <EditText
+        android:id="@+id/titleText"
+        android:layout_width="275dp"
+        android:layout_height="32dp"
+        android:background="#2F4E44"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/searchButton"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintTop_toBottomOf="@+id/label8"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
