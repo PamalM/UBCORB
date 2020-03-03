@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         adp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         durationSpinner.setAdapter(adp1);
 
-
         //Find date widget by it's id.
         dateTag = findViewById(R.id.datePicker);
 
@@ -276,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 else {
+
                     //Fetch values from widgets to be passed into intent.
                     //String building, room, time, duration, type, date, email, title; (Recall this variables. Initialize them and pass them to conduct search).
                     building = buildingSpinner.getSelectedItem().toString();
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("EMAIL FOR BOOKING: " + email);
         System.out.println("BOOKING TITLE: " + title);
 
-        Uri uri = Uri.parse("https://bookings.ok.ubc.ca/studyrooms/edit_entry.php?area=1&room=2&hour=7&minute=0&year=2020&month=3&day=2");
+        Uri uri = Uri.parse("https://bookings.ok.ubc.ca/studyrooms/admin.php");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
 
