@@ -307,9 +307,10 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("EMAIL FOR BOOKING: " + email);
         System.out.println("BOOKING TITLE: " + title);
 
-        Uri uri = Uri.parse("https://bookings.ok.ubc.ca/studyrooms/admin.php");
+        Uri uri = Uri.parse("https://bookings.ok.ubc.ca/studyrooms/edit_entry.php?area=5&room=51&hour=7&minute=30&year=2020&month=03&day=04?&end_seconds=34200&type=W");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+        finish();
 
     }
 }
