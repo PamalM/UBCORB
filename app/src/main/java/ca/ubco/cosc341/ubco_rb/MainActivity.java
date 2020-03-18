@@ -5,23 +5,13 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
-import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import java.util.Calendar;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Hashtable;
-import android.widget.AdapterView;
-import android.widget.Toast;
-import android.widget.TextView;
+
+import java.lang.reflect.Array;
+import java.util.*;
+import android.widget.*;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Date;
 import android.net.Uri;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     TextView titleText;
 
     //List containing all the bookable study buildings on campus.
+    //Utilize this list to fill the spinner values.
     String[] buildings = new String[]{
             "Library",
             "Commons - Floor 0",
@@ -62,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
     //List containing all the possible (start) times for booking a study room.
     String[] timeSlots = new String[]{
             "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00",
-            "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
-    };
+            "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30"};
 
     //List containing all the possible (duration) times for booking a study room.
     String[] durationSlots = new String[] {"30 Minutes", "1 Hour", "1.5 Hours", "2 Hours"};
 
+    //We will preset the type to 'Study Group' regardless. No one really books the other option.
     String[] types = new String[] {"Study Group", "Instructional/Workshop"};
 
     //Values that will be collected from the user, and passed into intent object to conduct study room search.
@@ -116,6 +107,24 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adp1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, durationArray){};
         adp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         durationSpinner.setAdapter(adp1);
+
+        durationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Position [0] = 30 Minutes.
+                //Position [1] = 1 Hour.
+                //Position [2] = 1.5 Hours.
+                //Position [3] = 2 Hours.
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //Do nothing; Literally.
+            }
+
+        });
 
         //Find date widget by it's id.
         dateTag = findViewById(R.id.datePicker);
@@ -183,6 +192,52 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timeArray){};
         adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timeSpinner.setAdapter(adp);
+
+        timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Position [0] = 30 Minutes.
+                //Position [1] = 1 Hour.
+                //Position [2] = 1.5 Hours.
+                //Position [3] = 2 Hours.
+
+                //Update durations depending on the time-slots selected.
+                //ArrayList is good because it can dynamically change.
+                //Bookings are only valid from 07:00 - 22:00. So we have to ensure booking duration stays within these limits.
+                List<String> updateDurations;
+
+                //If Time = 20:30, we have to restrict certain booking durations.
+                if (position == 27){
+                    updateDurations = new ArrayList<String>(Arrays.asList(Arrays.copyOfRange(durationSlots, 0, 3)));
+                }
+
+                else if (position == 28){
+                    updateDurations = new ArrayList<String>(Arrays.asList(Arrays.copyOfRange(durationSlots, 0, 2)));
+                }
+
+                else if (position == 29){
+                    updateDurations = new ArrayList<String>(Arrays.asList(Arrays.copyOfRange(durationSlots, 0, 1)));
+                }
+
+                //Otherwise include all the booking durations.
+                else {
+                    updateDurations = new ArrayList<String>(Arrays.asList(Arrays.copyOfRange(durationSlots, 0, 4)));
+                }
+
+                //Update duration spinner values accordingly.
+                ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, updateDurations){};
+                adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                durationSpinner.setAdapter(adapter3);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //Do nothing; Literally.
+            }
+
+        });
 
         //Populate the buildingSpinner with it's values.
         List<String> buildingArray =  new ArrayList<String>(Arrays.asList(buildings));
@@ -296,6 +351,74 @@ public class MainActivity extends AppCompatActivity {
 
     //Collect and pass the entered values from the text views onto search query for processing.
     public void passForQuerying(String building, String room, String time, String duration, String type, String date, String email, String title) {
+        /**
+        //Hashmap storing the building value code, and the actual building.
+        //The website pretty much labels the buildings as 'area' and each one has a value associated with them.
+        Hashtable<String, Integer> values = new Hashtable<String, Integer>();
+        values.put("Library", 1);
+        values.put("Commons - Floor 0", 5);
+        values.put("Commons - Floor 1", 6);
+        values.put("Commons - Floor 3", 7);
+        values.put("Commons - (Grad Student) Floor 3", 7);
+        values.put("EME - Tower 1", 8);
+        values.put("EME - Tower 2", 9);
+
+        //Store the rooms and their associated values.
+        values.put("LIB 122", 1);
+        values.put("LIB 121", 2);
+
+        values.put("COM 005", 12);
+        values.put("COM 006", 13);
+        values.put("COM 007", 14);
+        values.put("COM 008", 15);
+
+        values.put("COM 109", 17);
+        values.put("COM 110", 18);
+        values.put("COM 111", 19);
+        values.put("COM 112", 20);
+        values.put("COM 113", 21);
+        values.put("COM 114", 22);
+        values.put("COM 115", 23);
+        values.put("COM 116", 24);
+        values.put("COM 117", 25);
+        values.put("COM 118", 26);
+        values.put("COM 119", 27);
+        values.put("COM 120", 28);
+        values.put("COM 005", 12);
+
+        values.put("COM 302", 31);
+        values.put("COM 303", 32);
+        values.put("COM 304", 33);
+        values.put("COM 305", 34);
+        values.put("COM 306", 35);
+        values.put("COM 307", 36);
+        values.put("COM 308", 37);
+        values.put("COM 309", 38);
+        values.put("COM 312", 39);
+        values.put("COM 314", 40);
+        values.put("COM 316", 41);
+        values.put("COM 318", 41);
+
+        values.put("EME 1162", 54);
+        values.put("EME 1163", 55);
+        values.put("EME 1164", 56);
+        values.put("EME 1165", 57);
+        values.put("EME 1166", 58);
+        values.put("EME 1167", 59);
+        values.put("EME 1168", 60);
+
+        values.put("EME 1252", 43);
+        values.put("EME 1254", 44);
+        values.put("EME 2242", 46);
+        values.put("EME 2244", 48);
+        values.put("EME 2246", 49);
+        values.put("EME 2248", 50);
+        values.put("EME 2252", 51);
+        values.put("EME 2254", 52);
+        values.put("EME 2257", 53);
+
+        values.put("310A", 61);
+        values.put("310C", 62);
 
         //Print the entered values on terminal.
         System.out.println("BOOKING BUILDING: " + building);
@@ -307,11 +430,23 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("EMAIL FOR BOOKING: " + email);
         System.out.println("BOOKING TITLE: " + title);
 
-        Uri uri = Uri.parse("https://bookings.ok.ubc.ca/studyrooms/edit_entry.php?area=5&room=51&hour=7&minute=30&year=2020&month=03&day=04?&end_seconds=34200&type=W");
+        Uri uri = Uri.parse("https://bookings.ok.ubc.ca/studyrooms/edit_entry.php?area=5&room=51&hour=7&minute=30&year=2020&month=03&day=04?&end_seconds=34200&?");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
-        finish();
 
+        finish();
+         **/
+
+        Intent intent = new Intent(this, SuccessfulBooking.class);
+        intent.putExtra("Building", building);
+        intent.putExtra("Room", room);
+        intent.putExtra("Time", time);
+        intent.putExtra("Duration", duration);
+        intent.putExtra("Type", type);
+        intent.putExtra("Date", date);
+        intent.putExtra("Title", title);
+        intent.putExtra("Email", email);
+        startActivity(intent);
     }
 }
 

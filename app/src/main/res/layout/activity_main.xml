@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fg_Image_View"
-        app:layout_constraintVertical_bias="0.516"
+        app:layout_constraintVertical_bias="0.528"
         app:srcCompat="@color/colorAccent" />
 
     <Button
@@ -49,9 +49,9 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/buildingSpinner"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.117"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintEnd_toEndOf="@+id/buildingSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buildingSpinner"
         app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView" />
 
     <TextView
-        android:id="@+id/label2"
+        android:id="@+id/label1"
         android:layout_width="46dp"
         android:layout_height="19dp"
         android:layout_marginTop="16dp"
@@ -79,9 +79,9 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/roomSpinner"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.828"
-        app:layout_constraintStart_toEndOf="@+id/label1"
+        app:layout_constraintEnd_toEndOf="@+id/roomSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/roomSpinner"
         app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -93,8 +93,8 @@
         android:background="#C2BFBF"
         android:popupBackground="@color/colorPrimary"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.323"
+        app:layout_constraintEnd_toEndOf="@+id/datePicker"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/buildingSpinner"
         app:layout_constraintTop_toTopOf="@+id/buttonBG_IMGView" />
 
@@ -107,9 +107,9 @@
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.103"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintEnd_toEndOf="@+id/timeSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/timeSpinner"
         app:layout_constraintTop_toBottomOf="@+id/buildingSpinner" />
 
     <Spinner
@@ -119,9 +119,7 @@
         android:background="#C2BFBF"
         android:popupBackground="@color/colorPrimary"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.118"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintStart_toStartOf="@+id/buildingSpinner"
         app:layout_constraintTop_toBottomOf="@+id/label3" />
 
     <TextView
@@ -133,9 +131,9 @@
         android:textColor="#FFFFFF"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.116"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintEnd_toEndOf="@+id/durationSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/durationSpinner"
         app:layout_constraintTop_toBottomOf="@+id/timeSpinner" />
 
     <Spinner
@@ -145,9 +143,9 @@
         android:background="#C2BFBF"
         android:popupBackground="@color/colorPrimary"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
+        app:layout_constraintEnd_toStartOf="@+id/typeSpinner"
         app:layout_constraintHorizontal_bias="0.141"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintStart_toStartOf="@+id/timeSpinner"
         app:layout_constraintTop_toBottomOf="@+id/label4" />
 
     <TextView
@@ -158,9 +156,9 @@
         android:text="TYPE:"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.192"
-        app:layout_constraintStart_toEndOf="@+id/timeSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/typeSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/typeSpinner"
         app:layout_constraintTop_toBottomOf="@+id/buildingSpinner" />
 
     <Spinner
@@ -171,7 +169,7 @@
         android:popupBackground="@color/colorPrimary"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.597"
+        app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toEndOf="@+id/timeSpinner"
         app:layout_constraintTop_toBottomOf="@+id/label5" />
 
@@ -184,9 +182,9 @@
         android:textColor="#FFFFFF"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.125"
-        app:layout_constraintStart_toEndOf="@+id/durationSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/datePicker"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/datePicker"
         app:layout_constraintTop_toBottomOf="@+id/typeSpinner" />
 
     <TextView
@@ -198,9 +196,9 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.323"
-        app:layout_constraintStart_toEndOf="@+id/durationSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/typeSpinner"
+        app:layout_constraintHorizontal_bias="0.642"
+        app:layout_constraintStart_toStartOf="@+id/typeSpinner"
         app:layout_constraintTop_toBottomOf="@+id/label7" />
 
     <TextView
@@ -211,22 +209,22 @@
         android:text="EMAIL:"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.145"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintEnd_toEndOf="@+id/emailText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/emailText"
         app:layout_constraintTop_toBottomOf="@+id/durationSpinner" />
 
     <TextView
         android:id="@+id/label8"
         android:layout_width="136dp"
         android:layout_height="18dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:text="TITLE FOR BOOKING:"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintHorizontal_bias="0.199"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintEnd_toEndOf="@+id/titleText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/titleText"
         app:layout_constraintTop_toBottomOf="@+id/emailText" />
 
     <EditText
@@ -239,8 +237,8 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintEnd_toEndOf="@+id/roomSpinner"
+        app:layout_constraintStart_toStartOf="@+id/timeSpinner"
         app:layout_constraintTop_toBottomOf="@+id/label6" />
 
     <EditText
@@ -254,8 +252,8 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/searchButton"
-        app:layout_constraintEnd_toEndOf="@+id/buttonBG_IMGView"
-        app:layout_constraintStart_toStartOf="@+id/buttonBG_IMGView"
+        app:layout_constraintEnd_toEndOf="@+id/emailText"
+        app:layout_constraintStart_toStartOf="@+id/emailText"
         app:layout_constraintTop_toBottomOf="@+id/label8"
         app:layout_constraintVertical_bias="0.0" />
 

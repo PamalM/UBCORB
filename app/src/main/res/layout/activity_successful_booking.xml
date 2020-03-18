@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SuccessfulBooking">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="412dp"
+        android:layout_height="732dp"
+        android:background="#CCFF90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="?attr/colorControlActivated" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="358dp"
+        android:layout_height="547dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.163"
+        app:srcCompat="@android:color/background_light" />
+
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="141dp"
+        android:layout_height="55dp"
+        android:background="#353946"
+        android:onClick="backToMain"
+        android:text="Return"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.353" />
+
+    <TextView
+        android:id="@+id/label1"
+        android:layout_width="222dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:background="#B0030303"
+        android:gravity="center"
+        android:text="Booking Successful!"
+        android:textColor="#CCFF90"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/label2"
+        android:layout_width="310dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="Congratulations! Your room booking was successfully completed. Please review your booking below and make sure to attend on time. A 15 minute grace period is provided and can result in cancelled bookings if the occupant fails to show up for their booking."
+        android:textSize="12sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/label1" />
+
+    <TextView
+        android:id="@+id/label12"
+        android:layout_width="46dp"
+        android:layout_height="20sp"
+        android:layout_marginTop="12dp"
+        android:background="#1A1B1B"
+        android:gravity="center"
+        android:text="Email:"
+        android:textColor="#CCFF90"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label1"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/label1"
+        app:layout_constraintTop_toBottomOf="@+id/titleLabel" />
+
+    <TextView
+        android:id="@+id/label3"
+        android:layout_width="58dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="20dp"
+        android:background="#1A1B1B"
+        android:gravity="center"
+        android:text="Building:"
+        android:textColor="#CCFF90"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed-light"
+        app:layout_constraintEnd_toEndOf="@+id/label1"
+        app:layout_constraintStart_toStartOf="@+id/label1"
+        app:layout_constraintTop_toBottomOf="@+id/emailLabel" />
+
+    <TextView
+        android:id="@+id/buildingLabel"
+        android:layout_width="219dp"
+        android:layout_height="21dp"
+        android:background="#839693"
+        android:gravity="center"
+        android:text="BuildingLabel"
+        android:textColor="#F5181717"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label3"
+        app:layout_constraintStart_toStartOf="@+id/label3"
+        app:layout_constraintTop_toBottomOf="@+id/label3" />
+
+    <TextView
+        android:id="@+id/label4"
+        android:layout_width="48dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="24dp"
+        android:background="#1A1B1B"
+        android:gravity="center"
+        android:text="Room:"
+        android:textColor="#CCFF90"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/buildingLabel"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="@+id/buildingLabel"
+        app:layout_constraintTop_toBottomOf="@+id/buildingLabel" />
+
+    <TextView
+        android:id="@+id/roomLabel"
+        android:layout_width="76dp"
+        android:layout_height="21dp"
+        android:background="#839693"
+        android:gravity="center"
+        android:text="RoomLabel"
+        android:textColor="#F5181717"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label4"
+        app:layout_constraintStart_toStartOf="@+id/label4"
+        app:layout_constraintTop_toBottomOf="@+id/label4" />
+
+    <TextView
+        android:id="@+id/label5"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="24dp"
+        android:background="#1A1B1B"
+        android:gravity="center"
+        android:text="Date:"
+        android:textColor="#CCFF90"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-condensed-light"
+        app:layout_constraintEnd_toEndOf="@+id/buildingLabel"
+        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintStart_toStartOf="@+id/buildingLabel"
+        app:layout_constraintTop_toBottomOf="@+id/buildingLabel" />
+
+    <TextView
+        android:id="@+id/dateLabel"
+        android:layout_width="121dp"
+        android:layout_height="21dp"
+        android:background="#839693"
+        android:gravity="center"
+        android:text="DateLabel"
+        android:textColor="#F5181717"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label5"
+        app:layout_constraintStart_toStartOf="@+id/label5"
+        app:layout_constraintTop_toBottomOf="@+id/label5" />
+
+    <TextView
+        android:id="@+id/label11"
+        android:layout_width="82dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="20dp"
+        android:background="#1A1B1B"
+        android:gravity="center"
+        android:text="Duration:"
+        android:textColor="#CCFF90"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label3"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="@+id/label3"
+        app:layout_constraintTop_toBottomOf="@+id/timeLabel" />
+
+    <TextView
+        android:id="@+id/durationLabel"
+        android:layout_width="112dp"
+        android:layout_height="21dp"
+        android:background="#839693"
+        android:gravity="center"
+        android:text="DurationLabel"
+        android:textColor="#F5181717"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label11"
+        app:layout_constraintStart_toStartOf="@+id/label11"
+        app:layout_constraintTop_toBottomOf="@+id/label11" />
+
+    <TextView
+        android:id="@+id/label10"
+        android:layout_width="65dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="20dp"
+        android:background="#1A1B1B"
+        android:gravity="center"
+        android:text="Time:"
+        android:textColor="#CCFF90"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label3"
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintStart_toStartOf="@+id/label3"
+        app:layout_constraintTop_toBottomOf="@+id/dateLabel" />
+
+    <TextView
+        android:id="@+id/timeLabel"
+        android:layout_width="65dp"
+        android:layout_height="22dp"
+        android:background="#839693"
+        android:gravity="center"
+        android:text="TimeLabel"
+        android:textColor="#F5181717"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label10"
+        app:layout_constraintStart_toStartOf="@+id/label10"
+        app:layout_constraintTop_toBottomOf="@+id/label10" />
+
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_width="219dp"
+        android:layout_height="21dp"
+        android:background="#839693"
+        android:gravity="center"
+        android:text="EmailLabel"
+        android:textColor="#F5181717"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label12"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="@+id/label12"
+        app:layout_constraintTop_toBottomOf="@+id/label12" />
+
+    <TextView
+        android:id="@+id/label13"
+        android:layout_width="98dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:background="#1A1B1B"
+        android:gravity="center"
+        android:text="Booking Title:"
+        android:textColor="#CCFF90"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label1"
+        app:layout_constraintStart_toStartOf="@+id/label1"
+        app:layout_constraintTop_toBottomOf="@+id/label2" />
+
+    <TextView
+        android:id="@+id/titleLabel"
+        android:layout_width="219dp"
+        android:layout_height="21dp"
+        android:background="#839693"
+        android:gravity="center"
+        android:text="TitleLabel"
+        android:textColor="#F5181717"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label13"
+        app:layout_constraintStart_toStartOf="@+id/label13"
+        app:layout_constraintTop_toBottomOf="@+id/label13" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
