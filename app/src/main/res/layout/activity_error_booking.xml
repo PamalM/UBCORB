@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ErrorBooking">
+
+    <ImageView
+        android:id="@+id/blueBox"
+        android:layout_width="411dp"
+        android:layout_height="731dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?android:attr/colorAccent" />
+
+    <ImageView
+        android:id="@+id/whiteBox"
+        android:layout_width="350dp"
+        android:layout_height="316dp"
+        app:layout_constraintEnd_toEndOf="@+id/blueBox"
+        app:layout_constraintStart_toStartOf="@+id/blueBox"
+        app:layout_constraintTop_toBottomOf="@+id/label1"
+        app:srcCompat="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/whiteBox2"
+        android:layout_width="303dp"
+        android:layout_height="134dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="@+id/blueBox"
+        app:layout_constraintStart_toStartOf="@+id/blueBox"
+        app:layout_constraintTop_toBottomOf="@+id/whiteBox"
+        app:srcCompat="@android:color/white" />
+
+    <TextView
+        android:id="@+id/label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="#E64E4747"
+        android:text="Error in booking:"
+        android:textColor="#ECECEC"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-medium"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBox"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/whiteBox"
+        app:layout_constraintTop_toTopOf="@+id/blueBox" />
+
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="backToMain"
+        android:text="Return"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/blueBox"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBox"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/whiteBox"
+        app:layout_constraintTop_toBottomOf="@+id/whiteBox2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="322dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="24dp"
+        android:text="Error in room booking! That room isn't avaliable for the time and date you specified."
+        android:textColor="#532C2C"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBox"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="@+id/whiteBox"
+        app:layout_constraintTop_toTopOf="@+id/whiteBox" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="321dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="12dp"
+        android:text="Consider trying a different date and time; You may also try providing a different booking duration. "
+        android:textColor="#181818"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBox"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="@+id/whiteBox"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="321dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="12dp"
+        android:text="Your booking may not be completed due to a booking conflict!"
+        android:textColor="#4E2626"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBox"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="@+id/whiteBox"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Booking Summary:"
+        android:textColor="#173E70"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/whiteBox2"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="@+id/whiteBox2"
+        app:layout_constraintTop_toTopOf="@+id/whiteBox2" />
+
+    <TextView
+        android:id="@+id/buildingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Building"
+        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/timeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Time"
+        app:layout_constraintEnd_toEndOf="@+id/buildingLabel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buildingLabel"
+        app:layout_constraintTop_toBottomOf="@+id/buildingLabel" />
+
+    <TextView
+        android:id="@+id/dateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Date"
+        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buildingLabel"
+        app:layout_constraintTop_toBottomOf="@+id/timeLabel" />
+
+    <TextView
+        android:id="@+id/roomLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="82dp"
+        android:layout_marginRight="82dp"
+        android:text="Room"
+        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buildingLabel"
+        app:layout_constraintTop_toBottomOf="@+id/buildingLabel" />
+</androidx.constraintlayout.widget.ConstraintLayout>

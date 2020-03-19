@@ -437,7 +437,14 @@ public class MainActivity extends AppCompatActivity {
         finish();
          **/
 
-        Intent intent = new Intent(this, SuccessfulBooking.class);
+        Intent intent;
+
+        //SuccessfulBooking.java
+        //intent = new Intent(this, SuccessfulBooking.class);
+
+        //ErrorBooking.java
+        //intent = new Intent(this, ErrorBooking.class);
+
         intent.putExtra("Building", building);
         intent.putExtra("Room", room);
         intent.putExtra("Time", time);
