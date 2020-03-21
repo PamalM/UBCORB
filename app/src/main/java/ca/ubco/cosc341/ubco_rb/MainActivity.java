@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 
@@ -13,6 +14,16 @@ import java.util.*;
 import android.widget.*;
 import java.text.SimpleDateFormat;
 import android.net.Uri;
+
+import com.google.firebase.FirebaseError;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import static java.lang.System.in;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     TextView dateTag;
     TextView emailText;
     TextView titleText;
+
+    Booking booking;
 
     //List containing all the bookable study buildings on campus.
     //Utilize this list to fill the spinner values.
@@ -342,7 +355,92 @@ public class MainActivity extends AppCompatActivity {
                     email = emailText.getText().toString();
                     title = titleText.getText().toString();
 
-                    passForQuerying(building, room, time, duration, type, date, email, title);
+                    //Determine the end time for the booking depending on the duration.
+                    String endTime = "";
+
+                    String hours = time.substring(0,2);
+                    String minutes = time.substring(3,time.length());
+
+                    int hours_Int = Integer.parseInt(hours);
+                    int minutes_Int = Integer.parseInt(minutes);
+
+                    if (duration == "2 Hours"){
+                        hours_Int = hours_Int + 2;
+                    }
+
+                    else if (duration == "1 Hours"){
+                        hours_Int = hours_Int + 1;
+                    }
+
+                    else if (duration == "30 Minutes"){
+
+                        if (minutes_Int == 30){
+                            minutes = "00";
+                            hours_Int = hours_Int + 1;
+                        }
+
+                        else { minutes = "30"; }
+
+                    }
+
+                    else if (duration == "1.5 Hours"){
+
+                        if (minutes_Int == 30){
+                            minutes = "00";
+                            hours_Int = hours_Int + 1;
+                            hours_Int = hours_Int + 1;
+                        }
+
+                        else {
+
+                            minutes = "30";
+                            hours_Int = hours_Int + 1;
+
+                        }
+
+                    }
+
+                    endTime = hours_Int + "" + minutes;
+                    time = Integer.parseInt(time.substring(0, 2)) + "" +time.substring(3, time.length());
+
+                    //Hashtable to format the startTime and endTime accordingly to pass information to database.
+                    Hashtable<String, String>  timeSlots = new Hashtable<String, String>();
+                    timeSlots.put("700", "7:00 AM");
+                    timeSlots.put("730", "7:30 AM");
+                    timeSlots.put("800", "8:00 AM");
+                    timeSlots.put("830", "8:30 AM");
+                    timeSlots.put("900", "9:00 AM");
+                    timeSlots.put("930", "9:30 AM");
+                    timeSlots.put("1000", "10:00 AM");
+                    timeSlots.put("1030", "10:30 AM");
+                    timeSlots.put("1100", "11:00 AM");
+                    timeSlots.put("1130", "11:30 AM");
+                    timeSlots.put("1200", "12:00 PM");
+                    timeSlots.put("1230", "12:30 PM");
+                    timeSlots.put("1300", "1:00 PM");
+                    timeSlots.put("1330", "1:30 PM");
+                    timeSlots.put("1400", "2:00 PM");
+                    timeSlots.put("1430", "2:30 PM");
+                    timeSlots.put("1500", "3:00 PM");
+                    timeSlots.put("1530", "3:30 PM");
+                    timeSlots.put("1600", "4:00 PM");
+                    timeSlots.put("1630", "4:30 PM");
+                    timeSlots.put("1700", "5:00 PM");
+                    timeSlots.put("1730", "5:30 PM");
+                    timeSlots.put("1800", "6:00 PM");
+                    timeSlots.put("1830", "6:30 PM");
+                    timeSlots.put("1900", "7:00 PM");
+                    timeSlots.put("1930", "7:30 PM");
+                    timeSlots.put("2000", "8:00 PM");
+                    timeSlots.put("2030", "8:30 PM");
+                    timeSlots.put("2100", "9:00 PM");
+                    timeSlots.put("2130", "9:30 PM");
+                    timeSlots.put("2200", "10:00 PM");
+
+                    String startTime = timeSlots.get(time);
+                    String eTime = timeSlots.get(endTime);
+
+                    passForQuerying(building, room, startTime, duration, eTime, date, type, title, email);
 
                 }
             }
@@ -350,100 +448,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Collect and pass the entered values from the text views onto search query for processing.
-    public void passForQuerying(String building, String room, String time, String duration, String type, String date, String email, String title) {
-        /**
-        //Hashmap storing the building value code, and the actual building.
-        //The website pretty much labels the buildings as 'area' and each one has a value associated with them.
-        Hashtable<String, Integer> values = new Hashtable<String, Integer>();
-        values.put("Library", 1);
-        values.put("Commons - Floor 0", 5);
-        values.put("Commons - Floor 1", 6);
-        values.put("Commons - Floor 3", 7);
-        values.put("Commons - (Grad Student) Floor 3", 7);
-        values.put("EME - Tower 1", 8);
-        values.put("EME - Tower 2", 9);
+    public void passForQuerying(String building, String room, String startTime, String duration, String endTime, String date, String type, String tite, String email) {
 
-        //Store the rooms and their associated values.
-        values.put("LIB 122", 1);
-        values.put("LIB 121", 2);
-
-        values.put("COM 005", 12);
-        values.put("COM 006", 13);
-        values.put("COM 007", 14);
-        values.put("COM 008", 15);
-
-        values.put("COM 109", 17);
-        values.put("COM 110", 18);
-        values.put("COM 111", 19);
-        values.put("COM 112", 20);
-        values.put("COM 113", 21);
-        values.put("COM 114", 22);
-        values.put("COM 115", 23);
-        values.put("COM 116", 24);
-        values.put("COM 117", 25);
-        values.put("COM 118", 26);
-        values.put("COM 119", 27);
-        values.put("COM 120", 28);
-        values.put("COM 005", 12);
-
-        values.put("COM 302", 31);
-        values.put("COM 303", 32);
-        values.put("COM 304", 33);
-        values.put("COM 305", 34);
-        values.put("COM 306", 35);
-        values.put("COM 307", 36);
-        values.put("COM 308", 37);
-        values.put("COM 309", 38);
-        values.put("COM 312", 39);
-        values.put("COM 314", 40);
-        values.put("COM 316", 41);
-        values.put("COM 318", 41);
-
-        values.put("EME 1162", 54);
-        values.put("EME 1163", 55);
-        values.put("EME 1164", 56);
-        values.put("EME 1165", 57);
-        values.put("EME 1166", 58);
-        values.put("EME 1167", 59);
-        values.put("EME 1168", 60);
-
-        values.put("EME 1252", 43);
-        values.put("EME 1254", 44);
-        values.put("EME 2242", 46);
-        values.put("EME 2244", 48);
-        values.put("EME 2246", 49);
-        values.put("EME 2248", 50);
-        values.put("EME 2252", 51);
-        values.put("EME 2254", 52);
-        values.put("EME 2257", 53);
-
-        values.put("310A", 61);
-        values.put("310C", 62);
-
-        //Print the entered values on terminal.
-        System.out.println("BOOKING BUILDING: " + building);
-        System.out.println("BOOKING ROOM: " + room);
-        System.out.println("BOOKING START TIME: " + time);
-        System.out.println("BOOKING DURATION: " + duration);
-        System.out.println("BOOKING TYPE: " + type);
-        System.out.println("BOOKING DATE: " + date);
-        System.out.println("EMAIL FOR BOOKING: " + email);
-        System.out.println("BOOKING TITLE: " + title);
-
-        Uri uri = Uri.parse("https://bookings.ok.ubc.ca/studyrooms/edit_entry.php?area=5&room=51&hour=7&minute=30&year=2020&month=03&day=04?&end_seconds=34200&?");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-
-        finish();
-         **/
+        //Firebase Database initiation.
+        //We will be utilizing the Firebase database platform to conduct booking/testing of study rooms.
+        //This public open source database allows all android users to connect to this database and query results.
+        //The Booking.java class handles the object creation and passing information to our firebase database.
 
         Intent intent;
 
-        //SuccessfulBooking.java
-        //intent = new Intent(this, SuccessfulBooking.class);
+        String formatDate = date.replace("/", "-");
 
-        //ErrorBooking.java
-        //intent = new Intent(this, ErrorBooking.class);
+        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child(formatDate).child(building).child(room);
+
+        //Create booking object and set the object's attributes.
+        booking = new Booking();
+        booking.setBuilding(building);
+        booking.setRoom(room);
+        booking.setStartTime(startTime);
+        booking.setDuration(duration);
+        booking.setEndTime(endTime);
+        booking.setDate(formatDate);
+        booking.setType(type);
+        booking.setTitle(title);
+        booking.setEmail(email);
+
+        final String bookingName = startTime + "-" + endTime;
+
+        if (true){
+
+            //Submit booking to the database.
+            reff.child(bookingName).setValue(booking);
+
+            //Successful Booking.
+            intent = new Intent(this, SuccessfulBooking.class);
+        }
+
+        else {
+            //Error Booking.
+            intent = new Intent(this, ErrorBooking.class);
+        }
 
         intent.putExtra("Building", building);
         intent.putExtra("Room", room);
@@ -454,6 +498,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("Title", title);
         intent.putExtra("Email", email);
         startActivity(intent);
+
     }
 }
 
