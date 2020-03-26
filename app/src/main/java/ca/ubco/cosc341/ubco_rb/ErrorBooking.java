@@ -56,14 +56,7 @@ public class ErrorBooking extends AppCompatActivity {
         buildingLabel.setText(building);
         roomLabel.setText(room);
         dateLabel.setText("On, " + date);
-
-        //Determine the 12 Hour format display for time output.
-        String hour = time.substring(0,2);
-        String minutes = time.substring(3,time.length());
-        String twelveHourFormat;
-        if (Integer.parseInt(hour) <= 22 && Integer.parseInt(hour) >= 12){ twelveHourFormat = timeSlots.get(hour) + ":" + minutes + " PM"; }
-        else{ twelveHourFormat = timeSlots.get(hour) + ":" + minutes + " AM"; }
-        timeLabel.setText(twelveHourFormat + " for, " + duration);
+        timeLabel.setText(time);
 
     }
 

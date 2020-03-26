@@ -1,20 +1,19 @@
 package ca.ubco.cosc341.ubco_rb;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.graphics.drawable.ColorDrawable;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.content.Intent;
-
 import java.lang.reflect.Array;
 import java.util.*;
 import android.widget.*;
 import java.text.SimpleDateFormat;
-import android.net.Uri;
 
+//Firebase Database imports.
 import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,9 +22,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import static java.lang.System.in;
-
 public class MainActivity extends AppCompatActivity {
+
+    //Values that will be collected from the user, and passed into intent object to conduct study room search.
+    String building, time, duration, type, date, email, title;
+    public static String room;
 
     //Widget objects; To be initialized later in execution.
     Button searchButton;
@@ -73,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
     //We will preset the type to 'Study Group' regardless. No one really books the other option.
     String[] types = new String[] {"Study Group", "Instructional/Workshop"};
-
-    //Values that will be collected from the user, and passed into intent object to conduct study room search.
-    String building, room, time, duration, type, date, email, title;
 
     //Widget retrieves the date from the user when they click the 'Select Date' TextView.
     private DatePickerDialog.OnDateSetListener dateSetListener;
@@ -336,8 +334,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Ensure all fields are complete before submitting book request.
-
+                //Ensure all fields are complete and filled in before submitting book request.
                 if (!(titleText.getText().length() > 0) || !(emailText.getText().length() > 0)) {
                     Toast.makeText(getApplicationContext(), "Fill all fields to complete booking!", Toast.LENGTH_LONG).show();
                 }
@@ -358,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
                     //Determine the end time for the booking depending on the duration.
                     String endTime = "";
 
+                    //Extract the hours and minutes from the time.
                     String hours = time.substring(0,2);
                     String minutes = time.substring(3,time.length());
 
@@ -368,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                         hours_Int = hours_Int + 2;
                     }
 
-                    else if (duration == "1 Hours"){
+                    else if (duration == "1 Hour"){
                         hours_Int = hours_Int + 1;
                     }
 
@@ -401,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     endTime = hours_Int + "" + minutes;
-                    time = Integer.parseInt(time.substring(0, 2)) + "" +time.substring(3, time.length());
+                    time = Integer.parseInt(time.substring(0, 2)) + "" + time.substring(3, time.length());
 
                     //Hashtable to format the startTime and endTime accordingly to pass information to database.
                     Hashtable<String, String>  timeSlots = new Hashtable<String, String>();
@@ -439,7 +437,6 @@ public class MainActivity extends AppCompatActivity {
 
                     String startTime = timeSlots.get(time);
                     String eTime = timeSlots.get(endTime);
-
                     passForQuerying(building, room, startTime, duration, eTime, date, type, title, email);
 
                 }
@@ -447,19 +444,53 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void successPage(int bookingId){
+        //Successful Booking.
+        Intent intent = new Intent(this, SuccessfulBooking.class);
+
+        String bookingId_Conv = String.valueOf(bookingId);
+
+        intent.putExtra("Building", booking.getBuilding());
+        intent.putExtra("Room", booking.getRoom());
+        intent.putExtra("Time", booking.getStartTime());
+        intent.putExtra("Duration", booking.getDuration());
+        intent.putExtra("Type", booking.getType());
+        intent.putExtra("Date", booking.getDate());
+        intent.putExtra("Title", booking.getTitle());
+        intent.putExtra("Email", booking.getEmail());
+        intent.putExtra("bookingId", bookingId_Conv);
+        startActivity(intent);
+    }
+
+    public void errorPage(){
+        //Error booking.
+        Intent intent = new Intent(this, ErrorBooking.class);
+
+        intent.putExtra("Building", booking.getBuilding());
+        intent.putExtra("Room", booking.getRoom());
+        intent.putExtra("Time", booking.getStartTime());
+        intent.putExtra("Duration", booking.getDuration());
+        intent.putExtra("Type", booking.getType());
+        intent.putExtra("Date", booking.getDate());
+        intent.putExtra("Title", booking.getTitle());
+        intent.putExtra("Email", booking.getEmail());
+        //Put a zero in place for the bookingId. [0] = Booking Error.
+        intent.putExtra("bookingId", 0);
+        startActivity(intent);
+
+    }
+
+
+
     //Collect and pass the entered values from the text views onto search query for processing.
-    public void passForQuerying(String building, String room, String startTime, String duration, String endTime, String date, String type, String tite, String email) {
+    public void passForQuerying(String building, String room, final String startTime, String duration, String endTime, String date, String type, String title, String email) {
 
         //Firebase Database initiation.
         //We will be utilizing the Firebase database platform to conduct booking/testing of study rooms.
         //This public open source database allows all android users to connect to this database and query results.
         //The Booking.java class handles the object creation and passing information to our firebase database.
 
-        Intent intent;
-
-        String formatDate = date.replace("/", "-");
-
-        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child(formatDate).child(building).child(room);
+        final String formatDate = date.replace("/", "-");
 
         //Create booking object and set the object's attributes.
         booking = new Booking();
@@ -473,33 +504,56 @@ public class MainActivity extends AppCompatActivity {
         booking.setTitle(title);
         booking.setEmail(email);
 
-        final String bookingName = startTime + "-" + endTime;
+        final String bookingName = startTime + " - " + endTime;
+        final int bookingId;
 
-        if (true){
+        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child(formatDate).child(room);
+        ValueEventListener eventListener = new ValueEventListener() {
 
-            //Submit booking to the database.
-            reff.child(bookingName).setValue(booking);
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            //Successful Booking.
-            intent = new Intent(this, SuccessfulBooking.class);
-        }
+                //Create array of all currently booked times for the specified day and time.
+                ArrayList<String> bookedTimeSlots = new ArrayList<>();
 
-        else {
-            //Error Booking.
-            intent = new Intent(this, ErrorBooking.class);
-        }
+                //Get # of time slots, to correctly allocate the size of our arraylist.
+                int querySize = 0;
+                int bookingId;
 
-        intent.putExtra("Building", building);
-        intent.putExtra("Room", room);
-        intent.putExtra("Time", time);
-        intent.putExtra("Duration", duration);
-        intent.putExtra("Type", type);
-        intent.putExtra("Date", date);
-        intent.putExtra("Title", title);
-        intent.putExtra("Email", email);
-        startActivity(intent);
+                //Loop through and add each one into our arrayList. Temp. querying quick and simple; Not most efficient method.
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String sTime = ds.child("startTime").getValue(String.class);
+                    String eTime = ds.child("endTime").getValue(String.class);
+                    bookedTimeSlots.add(querySize, sTime + " - " + eTime);
+                    querySize++;
+                }
 
+                //Check to see if our current booking time is in the already bookedTimeSlots.
+                if (bookedTimeSlots.contains(bookingName)){
+                    //If it's in the already booked times, then don't complete the booking.
+                    System.out.println("[ERROR IN BOOKING!]");
+
+                    errorPage();
+                }
+
+                else {
+
+                    System.out.println("[SUCCESSFUL BOOKING!]");
+
+                    //If booking is successful, assign a bookingId (unique for each booking) useful for user confirmation page.
+                    //Generate a random number and assign it for each booking specific to that booking only.
+                    Random r = new Random( System.currentTimeMillis() );
+                    bookingId =  ((1 + r.nextInt(2)) * 10000 + r.nextInt(10000));
+                    booking.setBookingId(bookingId);
+                    successPage(bookingId);
+                    DatabaseReference reff2 = FirebaseDatabase.getInstance().getReference().child(formatDate).child(MainActivity.room);
+                    reff2.child(bookingName).setValue(booking);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        reff.addListenerForSingleValueEvent(eventListener);
     }
 }
-
-

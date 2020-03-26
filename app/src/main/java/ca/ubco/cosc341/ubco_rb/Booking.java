@@ -1,6 +1,6 @@
 package ca.ubco.cosc341.ubco_rb;
 
-//This java class handles the actual booking, and creates objects of type booking.
+//Java class for creating an object of type booking.
 public class Booking {
 
     private String building;
@@ -12,11 +12,9 @@ public class Booking {
     private String type;
     private String email;
     private String title;
+    private int bookingId;
 
     public Booking(){
-
-
-
     }
 
     //Getter & Setters.
@@ -88,7 +86,9 @@ public class Booking {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) { this.title = title; }
+
+    public void setBookingId(int bookingId){ this.bookingId = bookingId; }
+
+    public int getBookingId(){ return bookingId; }
 }
