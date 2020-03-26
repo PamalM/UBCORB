@@ -479,9 +479,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-
-
-
+    
     //Collect and pass the entered values from the text views onto search query for processing.
     public void passForQuerying(String building, String room, final String startTime, String duration, String endTime, String date, String type, String title, String email) {
 
@@ -528,18 +526,10 @@ public class MainActivity extends AppCompatActivity {
                     querySize++;
                 }
 
-                //Check to see if our current booking time is in the already bookedTimeSlots.
-                if (bookedTimeSlots.contains(bookingName)){
-                    //If it's in the already booked times, then don't complete the booking.
-                    System.out.println("[ERROR IN BOOKING!]");
+                boolean booked = bookedTimeSlots.contains(bookingName);
 
-                    errorPage();
-                }
-
-                else {
-
+                if (!booked){
                     System.out.println("[SUCCESSFUL BOOKING!]");
-
                     //If booking is successful, assign a bookingId (unique for each booking) useful for user confirmation page.
                     //Generate a random number and assign it for each booking specific to that booking only.
                     Random r = new Random( System.currentTimeMillis() );
@@ -549,6 +539,12 @@ public class MainActivity extends AppCompatActivity {
                     DatabaseReference reff2 = FirebaseDatabase.getInstance().getReference().child(formatDate).child(MainActivity.room);
                     reff2.child(bookingName).setValue(booking);
                 }
+
+                else {
+                    System.out.println("[ERROR IN BOOKING!]");
+                    errorPage();
+                }
+
             }
 
             @Override
