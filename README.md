@@ -7,4 +7,6 @@ UBCORB originally started as a 2020 Hackathon project; The purpose of this appli
 
 **To execute the project, please either download (.zip) or clone the repository into Android Studio. The development was executed using the Pixel API 28, but also is optimized for the Pixel 3 API 28; However, with the help of constraints, the application should be optimized to run on most android devices.**
 
+This project currently is in testing phases. The application is being tested against a Firebase DB currently, until user can interact with the UBCO Study Room Booking website. 
+
 
