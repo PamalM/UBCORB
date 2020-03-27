@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 //Position [1] = 1 Hour.
                 //Position [2] = 1.5 Hours.
                 //Position [3] = 2 Hours.
-
             }
 
             @Override
